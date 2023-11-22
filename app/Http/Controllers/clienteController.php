@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\clienteStoreRequest;
 use App\Http\Requests\clienteUpdateRequest;
+use App\Models\Documento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,12 +16,13 @@ class clienteController extends Controller
     {
         $clientes = Cliente::all();
 
-        return view('cliente.index', compact('clientes'));
+        return view('cliente.list')->with('clientes', $clientes);
     }
 
     public function create(Request $request): View
     {
-        return view('cliente.create');
+        $documentos = Documento::orderBy('titular')->get();
+        return view('cliente.form')->with('documentos',$documentos);
     }
 
     public function store(clienteStoreRequest $request): RedirectResponse
@@ -34,12 +36,13 @@ class clienteController extends Controller
 
     public function show(Request $request, cliente $cliente): View
     {
-        return view('cliente.show', compact('cliente'));
+        return redirect()->route('cliente.index');
     }
 
     public function edit(Request $request, cliente $cliente): View
     {
-        return view('cliente.edit', compact('cliente'));
+        $documentos = Documento::orderBy('titular')->get();
+        return view('cliente.form', compact('cliente'))->with('documentos', $documentos);
     }
 
     public function update(clienteUpdateRequest $request, cliente $cliente): RedirectResponse

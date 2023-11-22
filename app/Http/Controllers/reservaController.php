@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\reservaStoreRequest;
 use App\Http\Requests\reservaUpdateRequest;
+use App\Models\Cliente;
+use App\Models\Espaco;
 use App\Models\Reserva;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,12 +16,14 @@ class reservaController extends Controller
     {
         $reservas = Reserva::all();
 
-        return view('reserva.index', compact('reservas'));
+        return view('reserva.list', compact('reservas'));
     }
 
     public function create(Request $request): View
     {
-        return view('reserva.create');
+        $espacos = Espaco::orderBy('nome')->get();
+        $clientes = Cliente::orderBy('nome')->get();
+        return view('reserva.form')->with('clientes', $clientes)->with('espacos', $espacos);
     }
 
     public function store(reservaStoreRequest $request): RedirectResponse
@@ -33,12 +37,15 @@ class reservaController extends Controller
 
     public function show(Request $request, reserva $reserva): View
     {
-        return view('reserva.show', compact('reserva'));
+        $reserva = Reserva::all();
+        return view('reserva.list', compact('reserva'));
     }
 
     public function edit(Request $request, reserva $reserva): View
     {
-        return view('reserva.edit', compact('reserva'));
+        $espacos = Espaco::orderBy('nome')->get();
+        $clientes = Cliente::orderBy('nome')->get();
+        return view('reserva.form')->with('clientes', $clientes)->with('espacos',$espacos)->with('reserva', $reserva);
     }
 
     public function update(reservaUpdateRequest $request, reserva $reserva): RedirectResponse

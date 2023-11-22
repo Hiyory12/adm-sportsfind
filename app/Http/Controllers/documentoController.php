@@ -15,12 +15,12 @@ class documentoController extends Controller
     {
         $documentos = Documento::all();
 
-        return view('documento.index', compact('documentos'));
+        return view('documento.list', compact('documentos'));
     }
 
     public function create(Request $request): View
     {
-        return view('documento.create');
+        return view('documento.form');
     }
 
     public function store(documentoStoreRequest $request): RedirectResponse
@@ -34,12 +34,12 @@ class documentoController extends Controller
 
     public function show(Request $request, documento $documento): View
     {
-        return view('documento.show', compact('documento'));
+        return view('documento.list', compact('documento'));
     }
 
     public function edit(Request $request, documento $documento): View
     {
-        return view('documento.edit', compact('documento'));
+        return view('documento.form', compact('documento'));
     }
 
     public function update(documentoUpdateRequest $request, documento $documento): RedirectResponse

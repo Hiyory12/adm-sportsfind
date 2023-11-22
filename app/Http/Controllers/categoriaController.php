@@ -34,12 +34,12 @@ class categoriaController extends Controller
 
     public function show(Request $request, Categoria $categoria): View
     {
-        return view('categoria.show', compact('categoria'));
+        return view('categoria.list', compact('categoria'));
     }
 
     public function edit(Request $request, Categoria $categoria): View
     {
-        return view('categoria.edit', compact('categoria'));
+        return view('categoria.form', compact('categoria'));
     }
 
     public function update(categoriaUpdateRequest $request, categoria $categoria): RedirectResponse

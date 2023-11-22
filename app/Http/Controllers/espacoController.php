@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Espaco;
 use App\Http\Requests\espacoStoreRequest;
 use App\Http\Requests\espacoUpdateRequest;
@@ -15,12 +16,13 @@ class espacoController extends Controller
     {
         $espacos = Espaco::all();
 
-        return view('espaco.index', compact('espacos'));
+        return view('espaco.list', compact('espacos'));
     }
 
     public function create(Request $request): View
     {
-        return view('espaco.create');
+        $categorias = Categoria::orderBy('nome')->get();
+        return view('espaco.form')->with('categorias', $categorias);
     }
 
     public function store(espacoStoreRequest $request): RedirectResponse
@@ -34,12 +36,14 @@ class espacoController extends Controller
 
     public function show(Request $request, espaco $espaco): View
     {
-        return view('espaco.show', compact('espaco'));
+        $espacos = Espaco::all();
+        return view('espaco.list')->with('espacos',$espacos);
     }
 
     public function edit(Request $request, espaco $espaco): View
     {
-        return view('espaco.edit', compact('espaco'));
+        $categorias = Categoria::orderBy('nome')->get();
+        return view('espaco.form')->with('espaco', $espaco)->with('categorias', $categorias);
     }
 
     public function update(espacoUpdateRequest $request, espaco $espaco): RedirectResponse
