@@ -1,0 +1,49 @@
+models:
+  categoria:
+    esporte: char:50
+    exigeDocumento: bool
+  documento:
+    titular: char:255
+    numero: longint
+  cliente:
+    nome: char:255
+    email: char:50
+    telefone: longint
+    documento_id: id foreign
+  espaco:
+    nome: char:255
+    endereco: char:100
+    descricao: char:100
+    fotos: char
+    valorHora: float
+    categoria_id: id foreign
+  reserva:
+    inicio: datetime
+    fim: datetime
+    valor: float
+    cliente_id: id foreign
+    espaco_id: id foreign
+
+controllers:
+  categoria:
+    resource
+    search: 
+      redirect: categoria.index
+  documento:
+    resource
+    search: 
+      redirect: documento.index
+  cliente:
+    resource
+    search: 
+      redirect: cliente.index
+  reserva:
+    resource
+    search: 
+      redirect: reserva.index
+  espaco:
+    resource
+    search: 
+      redirect: espaco.index
+      
+seeders: categoria, documento, cliente, reserva, espaco

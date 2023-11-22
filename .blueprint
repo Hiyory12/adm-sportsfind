@@ -1,0 +1,70 @@
+created:
+    - app/Http/Controllers/categoriaController.php
+    - app/Http/Controllers/documentoController.php
+    - app/Http/Controllers/clienteController.php
+    - app/Http/Controllers/reservaController.php
+    - app/Http/Controllers/espacoController.php
+    - database/factories/CategoriaFactory.php
+    - database/factories/DocumentoFactory.php
+    - database/factories/ClienteFactory.php
+    - database/factories/EspacoFactory.php
+    - database/factories/ReservaFactory.php
+    - database/migrations/2023_11_22_175119_create_categorias_table.php
+    - database/migrations/2023_11_22_175120_create_documentos_table.php
+    - database/migrations/2023_11_22_175121_create_clientes_table.php
+    - database/migrations/2023_11_22_175122_create_espacos_table.php
+    - database/migrations/2023_11_22_175123_create_reservas_table.php
+    - app/Models/categoria.php
+    - app/Models/documento.php
+    - app/Models/cliente.php
+    - app/Models/espaco.php
+    - app/Models/reserva.php
+    - database/seeders/CategoriaSeeder.php
+    - database/seeders/DocumentoSeeder.php
+    - database/seeders/ClienteSeeder.php
+    - database/seeders/ReservaSeeder.php
+    - database/seeders/EspacoSeeder.php
+    - tests/Feature/Http/Controllers/categoriaControllerTest.php
+    - tests/Feature/Http/Controllers/documentoControllerTest.php
+    - tests/Feature/Http/Controllers/clienteControllerTest.php
+    - tests/Feature/Http/Controllers/reservaControllerTest.php
+    - tests/Feature/Http/Controllers/espacoControllerTest.php
+    - app/Http/Requests/categoriumStoreRequest.php
+    - app/Http/Requests/categoriumUpdateRequest.php
+    - app/Http/Requests/documentoStoreRequest.php
+    - app/Http/Requests/documentoUpdateRequest.php
+    - app/Http/Requests/clienteStoreRequest.php
+    - app/Http/Requests/clienteUpdateRequest.php
+    - app/Http/Requests/reservaStoreRequest.php
+    - app/Http/Requests/reservaUpdateRequest.php
+    - app/Http/Requests/espacoStoreRequest.php
+    - app/Http/Requests/espacoUpdateRequest.php
+    - resources/views/categorium/index.blade.php
+    - resources/views/categorium/create.blade.php
+    - resources/views/categorium/show.blade.php
+    - resources/views/categorium/edit.blade.php
+    - resources/views/documento/index.blade.php
+    - resources/views/documento/create.blade.php
+    - resources/views/documento/show.blade.php
+    - resources/views/documento/edit.blade.php
+    - resources/views/cliente/index.blade.php
+    - resources/views/cliente/create.blade.php
+    - resources/views/cliente/show.blade.php
+    - resources/views/cliente/edit.blade.php
+    - resources/views/reserva/index.blade.php
+    - resources/views/reserva/create.blade.php
+    - resources/views/reserva/show.blade.php
+    - resources/views/reserva/edit.blade.php
+    - resources/views/espaco/index.blade.php
+    - resources/views/espaco/create.blade.php
+    - resources/views/espaco/show.blade.php
+    - resources/views/espaco/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    User: {  }
+    categoria: { esporte: 'char:50', exigeDocumento: bool }
+    documento: { titular: 'char:255', numero: longint }
+    cliente: { nome: 'char:255', email: 'char:50', telefone: longint, documento_id: 'id foreign' }
+    espaco: { nome: 'char:255', endereco: 'char:100', descricao: 'char:100', fotos: char, valorHora: float, categoria_id: 'id foreign' }
+    reserva: { inicio: datetime, fim: datetime, valor: float, cliente_id: 'id foreign', espaco_id: 'id foreign' }
