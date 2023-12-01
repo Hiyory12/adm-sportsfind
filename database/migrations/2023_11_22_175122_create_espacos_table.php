@@ -18,7 +18,7 @@ return new class extends Migration
             $table->char('nome', 255);
             $table->char('endereco', 100);
             $table->char('descricao', 100);
-            $table->char('fotos');
+            $table->char('foto');
             $table->float('valorHora');
             $table->foreignId('categoria_id')->constrained();
             $table->timestamps();

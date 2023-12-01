@@ -15,8 +15,9 @@ class Documento extends Model
      * @var array
      */
     protected $fillable = [
-        'titular',
+        'cliente_id',
         'numero',
+        'categoria_id'
     ];
 
     /**

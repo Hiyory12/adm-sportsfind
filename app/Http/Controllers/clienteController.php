@@ -27,6 +27,20 @@ class clienteController extends Controller
 
     public function store(clienteStoreRequest $request): RedirectResponse
     {
+
+        $request->validate([
+            'nome'=> 'required|max:255',
+            'email'=> 'required|email',
+            'telefone'=> 'required|numeric',
+        ],[
+            'nome.required'=> 'O :attribute é obrigatório!',
+            'nome.max'=> 'O :attribute deve ser menor que 255 caracteres!',
+            'email.required'=> 'O :attribute é obrigatório!',
+            'email.email'=> 'Selecione um :attribute válido!',
+            'telefone.required'=> 'O :attribute é obrigatório!',
+            'telefone.numeric'=> 'Selecione um telefone válido!',
+        ]);
+
         $cliente = Cliente::create($request->validated());
 
         $request->session()->flash('cliente.id', $cliente->id);
@@ -47,6 +61,21 @@ class clienteController extends Controller
 
     public function update(clienteUpdateRequest $request, cliente $cliente): RedirectResponse
     {
+        $request->validate([
+            'nome'=> 'required|max:255',
+            'email'=> 'required|email',
+            'telefone'=> 'required|numeric',
+            'documento_id'=> 'required|numeric',
+        ],[
+            'nome.required'=> 'O :attribute é obrigatório!',
+            'nome.max'=> 'O :attribute deve ser menor que 255 caracteres!',
+            'email.required'=> 'O :attribute é obrigatório!',
+            'email.email'=> 'Selecione um :attribute válido!',
+            'telefone.required'=> 'O :attribute é obrigatório!',
+            'telefone.numeric'=> 'Selecione um telefone válido!',
+            'documento_id.required'=> 'O :attribute é obrigatório!',
+            'documento_id.numeric'=> 'Selecione um documento válido!',
+        ]);
         $cliente->update($request->validated());
 
         $request->session()->flash('cliente.id', $cliente->id);

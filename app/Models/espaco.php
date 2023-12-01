@@ -19,7 +19,7 @@ class Espaco extends Model
         'nome',
         'endereco',
         'descricao',
-        'fotos',
+        'foto',
         'valorHora',
         'categoria_id',
     ];

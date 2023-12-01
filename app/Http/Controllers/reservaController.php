@@ -28,6 +28,20 @@ class reservaController extends Controller
 
     public function store(reservaStoreRequest $request): RedirectResponse
     {
+        $request->validate([
+            'inicio'=>'required',
+            'fim'=>'required',
+            'valor'=>'required|numeric',
+            'cliente_id'=>'required',
+            'espaco_id'=>'required',
+        ],[
+            'inicio.required'=>'O :attribute é obrigatório!',
+            'fim.required'=>'O :attribute é obrigatório!',
+            'valor.required'=>'O :attribute é obrigatório!',
+            'valor.numeric'=>'O :attribute deve ser numérico!',
+            'cliente_id.required'=>'O :attribute é obrigatório!',
+            'espaco_id.required'=>'O :attribute é obrigatório!',
+        ]);
         $reserva = Reserva::create($request->validated());
 
         $request->session()->flash('reserva.id', $reserva->id);
@@ -49,7 +63,20 @@ class reservaController extends Controller
     }
 
     public function update(reservaUpdateRequest $request, reserva $reserva): RedirectResponse
-    {
+    {$request->validate([
+        'inicio'=>'required',
+        'fim'=>'required',
+        'valor'=>'required|numeric',
+        'cliente_id'=>'required',
+        'espaco_id'=>'required',
+    ],[
+        'inicio.required'=>'O :attribute é obrigatório!',
+        'fim.required'=>'O :attribute é obrigatório!',
+        'valor.required'=>'O :attribute é obrigatório!',
+        'valor.numeric'=>'O :attribute deve ser numérico!',
+        'cliente_id.required'=>'O :attribute é obrigatório!',
+        'espaco_id.required'=>'O :attribute é obrigatório!',
+    ]);
         $reserva->update($request->validated());
 
         $request->session()->flash('reserva.id', $reserva->id);

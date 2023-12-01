@@ -18,7 +18,6 @@ return new class extends Migration
             $table->char('nome', 255);
             $table->char('email', 50);
             $table->string('telefone');
-            $table->foreignId('documento_id')->constrained();
             $table->timestamps();
         });
 

@@ -25,6 +25,17 @@ class documentoController extends Controller
 
     public function store(documentoStoreRequest $request): RedirectResponse
     {
+        $request->validate([
+            'categoria_id'=> 'requred|max:255',
+            'cliente_id'=> 'requred|max:255',
+            'numero'=> 'requred',
+        ],[
+            'categoria_id.required'=> 'O :attribute é obrigatório!',
+            'cliente_id.required'=> 'O :attribute é obrigatório!',
+            'cliente_id.max'=> 'O :attribute deve conter no máximo 255 caracteres!',
+            'numero.required'=> 'O :attribute é obrigatório!',
+        ]);
+
         $documento = Documento::create($request->validated());
 
         $request->session()->flash('documento.id', $documento->id);
@@ -44,6 +55,14 @@ class documentoController extends Controller
 
     public function update(documentoUpdateRequest $request, documento $documento): RedirectResponse
     {
+        $request->validate([
+            'titular'=> 'requred|max:255',
+            'numero'=> 'requred',
+        ],[
+            'titular.required'=> 'O :attribute é obrigatório!',
+            'titular.max'=> 'O :attribute deve conter no máximo 255 caracteres!',
+            'numero.required'=> 'O :attribute é obrigatório!',
+        ]);
         $documento->update($request->validated());
 
         $request->session()->flash('documento.id', $documento->id);

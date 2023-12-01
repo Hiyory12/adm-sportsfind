@@ -25,6 +25,14 @@ class categoriaController extends Controller
 
     public function store(categoriaStoreRequest $request): RedirectResponse
     {
+        $request->validate([
+            'esporte'=>'required',
+            'exigeDocumento'=>'required',
+        ],[
+            'esporte.required'=> 'O :attribute é obrigatório!',
+            'exigeDocuemento.required'=> 'O :attribute é obrigatório!',
+        ]);
+
         $categoria = Categoria::create($request->validated());
 
         $request->session()->flash('categoria.id', $categoria->id);
@@ -44,6 +52,14 @@ class categoriaController extends Controller
 
     public function update(categoriaUpdateRequest $request, categoria $categoria): RedirectResponse
     {
+        $request->validate([
+            'esporte'=>'required',
+            'exigeDocumento'=>'required',
+        ],[
+            'esporte.required'=> 'O :attribute é obrigatório!',
+            'exigeDocuemento.required'=> 'O :attribute é obrigatório!',
+        ]);
+
         $categoria->update($request->validated());
 
         $request->session()->flash('categoria.id', $categoria->id);

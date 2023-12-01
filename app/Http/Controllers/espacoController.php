@@ -27,6 +27,24 @@ class espacoController extends Controller
 
     public function store(espacoStoreRequest $request): RedirectResponse
     {
+        $request->validate([
+            'nome'=> 'required|max:255',
+            'endereco'=> 'required',
+            'fotos'=> 'required',
+            'valorHora'=> 'required|numeric',
+            'categoria_id'=> 'required',
+            'descricao'=> 'required',
+        ],[
+            'nome.required'=> 'O :attribute é obrigatório',
+            'nome.max'=> 'O :attribute deve conter no máximo 255 caracteres!',
+            'endereco.required'=> 'O :attribute é obrigatório',
+            'fotos.required'=> 'O :attribute é obrigatório',
+            'valorHora.required'=> 'O :attribute é obrigatório',
+            'valorHora.numeric'=> 'O :attribute deve ser numérico!',
+            'categoria_id.required'=> 'O :attribute é obrigatório',
+            'descricao.required'=>'O :attribute é obrigatório!',
+        ]);
+
         $espaco = Espaco::create($request->validated());
 
         $request->session()->flash('espaco.id', $espaco->id);
@@ -48,6 +66,23 @@ class espacoController extends Controller
 
     public function update(espacoUpdateRequest $request, espaco $espaco): RedirectResponse
     {
+        $request->validate([
+            'nome'=> 'required|max:255',
+            'endereco'=> 'required',
+            'fotos'=> 'required',
+            'valorHora'=> 'required|numeric',
+            'categoria_id'=> 'required',
+            'descricao'=> 'required',
+        ],[
+            'nome.required'=> 'O :attribute é obrigatório',
+            'nome.max'=> 'O :attribute deve conter no máximo 255 caracteres!',
+            'endereco.required'=> 'O :attribute é obrigatório',
+            'fotos.required'=> 'O :attribute é obrigatório',
+            'valorHora.required'=> 'O :attribute é obrigatório',
+            'valorHora.numeric'=> 'O :attribute deve ser numérico!',
+            'categoria_id.required'=> 'O :attribute é obrigatório',
+            'descricao.required'=>'O :attribute é obrigatório!',
+        ]);
         $espaco->update($request->validated());
 
         $request->session()->flash('espaco.id', $espaco->id);
