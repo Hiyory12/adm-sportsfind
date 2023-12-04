@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\Cliente;
 use App\Http\Requests\documentoStoreRequest;
 use App\Http\Requests\documentoUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,7 @@ class documentoController extends Controller
         return view('documento.list', compact('documentos'));
     }
 
-    public function create(Request $request): View
+    public function create()
     {
         return view('documento.form');
     }
@@ -37,28 +38,46 @@ class documentoController extends Controller
         return view('documento.list', compact('documento'));
     }
 
-    public function edit(Request $request, documento $documento): View
+    public function edit(Request $request, $id)
     {
-        return view('documento.form', compact('documento'));
+        $documento = Documento::find($id);
+
+        return view('documento.form')->with([
+            "documento" => $documento
+        ]);
     }
 
     public function update(documentoUpdateRequest $request, documento $documento): RedirectResponse
     {
         $documento->update($request->validated());
 
-        $request->session()->flash('documento.id', $documento->id);
+        $dados = [
+            'cliente_id'=>$request->cliente_id,
+        'titular'=> $request->titular,
+        'numero'=> $request->numero,
+        'foto'=>$nome_arquivo,
+        'plano'=>$request->plano,
+        ];  
 
-        return redirect()->route('documento.index');
+        Documento::updateOrCreate(
+            ['id' => $request->id],
+            $dados
+        );
+
+
+        return redirect()->route('cliente.detalhes', $request->cliente_id)->with('success', "Atualizado com sucesso!");
     }
 
-    public function destroy(Request $request, documento $documento): RedirectResponse
+    public function destroy($id)
     {
+        $documento = Documento::findOrFail($id);
+        $clienteId = $documento->cliente_id;
         $documento->delete();
 
-        return redirect()->route('documento.index');
+        return redirect()->route('cliente.detalhes', $clienteId)->with('success', "Removido com sucesso!");
     }
 
-    public function search(Request $request): RedirectResponse
+    public function search(Request $request)
     {        
         if(!empty($request->valor)){
         $documentos = Documento::where(

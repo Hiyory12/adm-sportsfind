@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Documentos;
 use App\Http\Requests\clienteStoreRequest;
 use App\Http\Requests\clienteUpdateRequest;
 use App\Models\Documento;
@@ -25,13 +26,45 @@ class clienteController extends Controller
         return view('cliente.form')->with('documentos',$documentos);
     }
 
-    public function store(clienteStoreRequest $request): RedirectResponse
+    public function store(Request $request)
     {
+<<<<<<< HEAD
+=======
+
+        $request->validate([
+            'nome'=> 'required|max:255',
+            'email'=> 'required|email',
+            'telefone'=> 'required|numeric',
+        ],[
+            'nome.required'=> 'O :attribute é obrigatório!',
+            'nome.max'=> 'O :attribute deve ser menor que 255 caracteres!',
+            'email.required'=> 'O :attribute é obrigatório!',
+            'email.email'=> 'Selecione um :attribute válido!',
+            'telefone.required'=> 'O :attribute é obrigatório!',
+            'telefone.numeric'=> 'Selecione um telefone válido!',
+        ]);
+
         $cliente = Cliente::create($request->validated());
+>>>>>>> 173d9a457c8d8efb67b5573996a4a010fdfd87d9
 
-        $request->session()->flash('cliente.id', $cliente->id);
+        $request->validate([
+            'nome'=>'required',
+            'email'=>'required',
+            'telefone'=>'required',
+        ],[
+            'nome.required'=>"O :attribute é obrigatorio!",
+            'email.required'=>"O :attribute é obrigatorio!",
+            'telefone.required'=>"O :attribute é obrigatorio!",
+            ]);
 
-        return redirect()->route('cliente.index');
+        $dados = [
+            'nome'=> $request->nome,
+            'email'=> $request->email,
+            'telefone'=> $request->telefone,
+        ];
+
+        Cliente::create($dados);
+        return redirect()->route('cliente.list')->with('success', "Cadastrado com sucesso!");
     }
 
     public function show(Request $request, cliente $cliente): View
@@ -45,34 +78,70 @@ class clienteController extends Controller
         return view('cliente.form', compact('cliente'))->with('documentos', $documentos);
     }
 
-    public function update(clienteUpdateRequest $request, cliente $cliente): RedirectResponse
+    public function update(Request $request, cliente $cliente)
     {
-        $cliente->update($request->validated());
+        $request->validate([
+            'nome'=>'required',
+            'email'=>'required',
+            'telefone'=>'required',
+        ],[
+            'nome.required'=>"O :attribute é obrigatorio!",
+            'email.required'=>"O :attribute é obrigatorio!",
+            'telefone.required'=>"O :attribute é obrigatorio!",
+            ]);
 
-        $request->session()->flash('cliente.id', $cliente->id);
+        $dados = [
+            'nome'=> $request->nome,
+            'email'=> $request->email,
+            'telefone'=> $request->telefone,
+        ];
 
-        return redirect()->route('cliente.index');
+        Cliente::updateOrCreate(
+            ['id' => $request->id],
+            $dados
+        );
+        return redirect()->route('cliente.list')->with('success', "Alterado com sucesso!");
     }
 
-    public function destroy(Request $request, cliente $cliente): RedirectResponse
+    public function destroy($id)
     {
+        $cliente = Cliente::findOrFail($id);
+
         $cliente->delete();
 
-        return redirect()->route('cliente.index');
+        return redirect()->route('cliente.list')->with('success', "Removido com sucesso!");
     }
 
-    public function search(Request $request): RedirectResponse
+    public function search(Request $request)
     {
         if(!empty($request->valor)){
-        $clientes = Cliente::where(
-            $request->tipo,
-             'like' ,
-            "%". $request->valor."%"
-            )->get();
-        } else {
-            $clientes = Cliente::all();
+            $clientes = Cliente::where(
+                $request->tipo,
+                 'like' ,
+                "%". $request->valor."%"
+                )->get();
+            } else {
+                $clientes = Cliente::all();
+            }
+    
+            return view('cliente.list')->with(['clientes'=> $clientes]);
+    }
+
+    public function detalhes($id) {
+        $cliente = Cliente::findOrFail($id);
+
+        if($cliente->documento) {
+            $documentoId = $cliente->documento->id;
+        }
+        else {
+            $documentoId = "";
+        }
+        
+        $documento = Documento::find($documentoId);
+        if($documento == null) {
+            $documento = "";
         }
 
-    return view('cliente.list')->with(['clientes'=> $clientes]);
+        return view('cliente.detalhes')->with(['cliente'=> $cliente, 'documento' => $documento]);
     }
 }

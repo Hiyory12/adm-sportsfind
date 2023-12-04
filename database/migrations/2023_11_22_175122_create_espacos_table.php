@@ -15,12 +15,18 @@ return new class extends Migration
 
         Schema::create('espacos', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD
+            $table->char('nome', 50);
+            $table->char('esporte', 50);
+            $table->char('endereco', 255);
+            $table->char('descricao', 255);
+=======
             $table->char('nome', 255);
             $table->char('endereco', 100);
             $table->char('descricao', 100);
-            $table->char('fotos');
+>>>>>>> 173d9a457c8d8efb67b5573996a4a010fdfd87d9
+            $table->char('foto');
             $table->float('valorHora');
-            $table->foreignId('categoria_id')->constrained();
             $table->timestamps();
         });
 

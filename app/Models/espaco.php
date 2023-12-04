@@ -17,11 +17,11 @@ class Espaco extends Model
      */
     protected $fillable = [
         'nome',
+        'esporte',
         'endereco',
         'descricao',
-        'fotos',
+        'foto',
         'valorHora',
-        'categoria_id',
     ];
 
     /**
@@ -32,11 +32,6 @@ class Espaco extends Model
     protected $casts = [
         'id' => 'integer',
         'valorHora' => 'float',
-        'categoria_id' => 'integer',
     ];
 
-    public function categoria(): BelongsTo
-    {
-        return $this->belongsTo(Categoria::class);
-    }
 }

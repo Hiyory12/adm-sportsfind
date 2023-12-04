@@ -19,7 +19,6 @@ class Cliente extends Model
         'nome',
         'email',
         'telefone',
-        'documento_id',
     ];
 
     /**
@@ -32,8 +31,8 @@ class Cliente extends Model
         'documento_id' => 'integer',
     ];
 
-    public function documento(): BelongsTo
+    public function documento()
     {
-        return $this->belongsTo(Documento::class);
+        return $this->hasOne(Documento::class);
     }
 }

@@ -15,8 +15,16 @@ class Documento extends Model
      * @var array
      */
     protected $fillable = [
+        'cliente_id',
+<<<<<<< HEAD
         'titular',
         'numero',
+        'foto',
+        'plano',
+=======
+        'numero',
+        'categoria_id'
+>>>>>>> 173d9a457c8d8efb67b5573996a4a010fdfd87d9
     ];
 
     /**
@@ -27,4 +35,9 @@ class Documento extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
 }
