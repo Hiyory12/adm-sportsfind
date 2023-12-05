@@ -16,7 +16,7 @@ class ClienteSeeder extends Seeder
             [
                 'nome' => "Cristiano Ronaldo",
                 'email' => "cr7@gmail.com",
-                'telefone' => "(49) 98883-0613",
+                'telefone' => "(49) 98883-6841",
             ],
             [
                 'nome' => "Lionel Messi",
@@ -32,6 +32,25 @@ class ClienteSeeder extends Seeder
                 'nome' => "Paolo Maldini",
                 'email' => "maldini@gmail.com",
                 'telefone' => "(49) 96485-3215",
+            ],[
+                'nome' => "Hiury",
+                'email' => "hyu@gmail.com",
+                'telefone' => "(49) 98883-0613",
+            ],
+            [
+                'nome' => "Weber",
+                'email' => "weber@gmail.com",
+                'telefone' => "(49) 96516-7524",
+            ],
+            [
+                'nome' => "Murilo",
+                'email' => "muriloviz@gmail.com",
+                'telefone' => "(49) 98487-3265",
+            ],
+            [
+                'nome' => "Riboli",
+                'email' => "ribolinho@gmail.com",
+                'telefone' => "(49) 98521-6478",
             ],
         ];
 

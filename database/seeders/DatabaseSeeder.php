@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\EspacoSeeder;
 use Database\Seeders\ClienteSeeder;
 use Database\Seeders\DocumentoSeeder;
+use Database\Seeders\ReservaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
             EspacoSeeder::class,
             ClienteSeeder::class,
             DocumentoSeeder::class,
+            ReservaSeeder::class,
         ]);
     }
 }
