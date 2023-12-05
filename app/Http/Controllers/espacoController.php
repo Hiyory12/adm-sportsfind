@@ -26,34 +26,12 @@ class espacoController extends Controller
 
     public function store(Request $request)
     {
-<<<<<<< HEAD
         $foto = $request->file('foto');
         $nome_arquivo = "";
         //verifica se existe foto no formulário
         if($foto){
             $nome_arquivo =
             date('YmdHis').'.'.$foto->getClientOriginalExtension();
-=======
-        $request->validate([
-            'nome'=> 'required|max:255',
-            'endereco'=> 'required',
-            'fotos'=> 'required',
-            'valorHora'=> 'required|numeric',
-            'categoria_id'=> 'required',
-            'descricao'=> 'required',
-        ],[
-            'nome.required'=> 'O :attribute é obrigatório',
-            'nome.max'=> 'O :attribute deve conter no máximo 255 caracteres!',
-            'endereco.required'=> 'O :attribute é obrigatório',
-            'fotos.required'=> 'O :attribute é obrigatório',
-            'valorHora.required'=> 'O :attribute é obrigatório',
-            'valorHora.numeric'=> 'O :attribute deve ser numérico!',
-            'categoria_id.required'=> 'O :attribute é obrigatório',
-            'descricao.required'=>'O :attribute é obrigatório!',
-        ]);
-
-        $espaco = Espaco::create($request->validated());
->>>>>>> 173d9a457c8d8efb67b5573996a4a010fdfd87d9
 
             $diretorio = "images/espaco/";
             //salva foto em uma pasta do sistema
@@ -107,33 +85,12 @@ class espacoController extends Controller
 
     public function update(Request $request, espaco $espaco)
     {
-<<<<<<< HEAD
         $foto = $request->file('foto');
         $nome_arquivo = "";
         //verifica se existe foto no formulário
         if($foto){
             $nome_arquivo =
             date('YmdHis').'.'.$foto->getClientOriginalExtension();
-=======
-        $request->validate([
-            'nome'=> 'required|max:255',
-            'endereco'=> 'required',
-            'fotos'=> 'required',
-            'valorHora'=> 'required|numeric',
-            'categoria_id'=> 'required',
-            'descricao'=> 'required',
-        ],[
-            'nome.required'=> 'O :attribute é obrigatório',
-            'nome.max'=> 'O :attribute deve conter no máximo 255 caracteres!',
-            'endereco.required'=> 'O :attribute é obrigatório',
-            'fotos.required'=> 'O :attribute é obrigatório',
-            'valorHora.required'=> 'O :attribute é obrigatório',
-            'valorHora.numeric'=> 'O :attribute deve ser numérico!',
-            'categoria_id.required'=> 'O :attribute é obrigatório',
-            'descricao.required'=>'O :attribute é obrigatório!',
-        ]);
-        $espaco->update($request->validated());
->>>>>>> 173d9a457c8d8efb67b5573996a4a010fdfd87d9
 
             $diretorio = "images/espaco/";
             //salva foto em uma pasta do sistema

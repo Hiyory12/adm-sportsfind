@@ -28,24 +28,6 @@ class clienteController extends Controller
 
     public function store(Request $request)
     {
-<<<<<<< HEAD
-=======
-
-        $request->validate([
-            'nome'=> 'required|max:255',
-            'email'=> 'required|email',
-            'telefone'=> 'required|numeric',
-        ],[
-            'nome.required'=> 'O :attribute é obrigatório!',
-            'nome.max'=> 'O :attribute deve ser menor que 255 caracteres!',
-            'email.required'=> 'O :attribute é obrigatório!',
-            'email.email'=> 'Selecione um :attribute válido!',
-            'telefone.required'=> 'O :attribute é obrigatório!',
-            'telefone.numeric'=> 'Selecione um telefone válido!',
-        ]);
-
-        $cliente = Cliente::create($request->validated());
->>>>>>> 173d9a457c8d8efb67b5573996a4a010fdfd87d9
 
         $request->validate([
             'nome'=>'required',
