@@ -25,15 +25,11 @@
                 @endif
 
                 <input class="px-4 py-2
-                         border border-green-600 rounded-md w-full bg-neutral-700 text-gray-200" readonly name="id"
+                         border border-green-600 rounded-md w-full bg-neutral-700 text-gray-200" readonly type="hidden" name="id"
                     value="@if (!empty($documento->id)) {{ $documento->id }}@elseif (!empty(old('id'))){{ old('id') }}@else{{ '' }} @endif">
 
-                    <label
-                        class="block text-gray-200
-                                font-bold mb-2
-                    ">Id do Cliente</label>
                     <input class="px-4 py-2
-                         border border-green-600 rounded-md w-full bg-neutral-700 text-gray-200"  readonly name="cliente_id"
+                         border border-green-600 rounded-md w-full bg-neutral-700 text-gray-200"  readonly type="hidden" name="cliente_id"
                     value="@if(!empty($cliente)){{ $cliente->id }} @elseif($documento){{ $documento->cliente_id }}@endif">
 
                     <div class="py-4">
@@ -52,8 +48,7 @@
                     <label
                         class="block text-gray-200
                                 font-bold mb-2
-                    ">Número
-                        do Documento</label>
+                    ">Número</label>
                     <input type="text"
                         class="px-4 py-2
                          border border-green-600 rounded-md w-full  bg-neutral-700 text-gray-200" name="numero"

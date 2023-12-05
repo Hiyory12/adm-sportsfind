@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\documentoController;
 use App\Http\Controllers\clienteController;
 use App\Http\Controllers\espacoController;
+use App\Http\Controllers\reservaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,9 @@ Route::get('/cliente/detalhes/{id}',[clienteController::class,'detalhes'])->name
 
 Route::get('reserva/search', [App\Http\Controllers\reservaController::class, 'search']);
 Route::resource('reserva', App\Http\Controllers\reservaController::class);
+Route::get('/reserva',[reservaController::class,'index'])->name('reserva.list');
+Route::get('/reserva/create/cliente/{id}',[reservaController::class,'cadastrar'])->name('reserva.cadastrar');
+Route::get('/reserva/destroy/{id}',[reservaController::class,'destroy'])->name('reserva.destroy');
 
 
 

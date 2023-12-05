@@ -11,6 +11,8 @@
         else {
             $temCarteirinha = "Não";
         }
+
+        $reservas = $cliente->reservas;
     @endphp
 
     <style>
@@ -44,7 +46,7 @@
 
     <h3 class="pt-4 text-4xl font-medium text-center mb-4">Detalhes do Cliente</h3>
     <div
-        class="w-3/4 mr-auto ml-auto rounded-lg bg-white p-6 dark:bg-neutral-600 lg:px-8">
+        class="w-3/4 mr-auto ml-auto rounded-lg bg-white p-6 dark:bg-neutral-600 lg:px-8 pt-12 pb-12">
 
         <a class="
                             bg-blue-500 hover:bg-blue-600 text-white
@@ -122,7 +124,64 @@
                         Criar Carteirinha</a>
 
             @endif
+
+
+
+            <h4 class="titulo">Reservas do Cliente</h4>
+
+
+    <div class="flex flex-col w-full mr-auto ml-auto mb-6">
+
+
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                    <table class="min-w-full text-left text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">Espaço</th>
+                                <th scope="col" class="px-6 py-4">Valor</th>
+                                <th scope="col" class="px-6 py-4">Início</th>
+                                <th scope="col" class="px-6 py-4">Fim</th>
+                                <th scope="col" class="px-6 py-4"></th>
+                                <th scope="col" class="px-6 py-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($reservas as $item)
+                                <tr
+                                    class="border-b transition duration-300 ease-in-out hover:bg-neutral-700">
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $item->espaco->nome ?? '' }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $item->valor ?? '' }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $item->inicio ?? '' }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $item->fim ?? '' }}</td>
+                                            <td class="whitespace-nowrap px-6 py-4"><a
+                                            href="{{ route('reserva.edit', $item->id) }}" class="bg-green-500 hover:bg-green-600 text-white
+                            font-semibold py-2 px-4 rounded focus:outline
+                            focus:ring focus:border-green-300"><i
+                                                class="fa-solid fa-pen-to-square" style="color: white;"></i>  Atualizar</a></td>
+                                                <td class="whitespace-nowrap px-6 py-4"><a
+                                            href="{{ route('reserva.destroy', $item->id) }}" onclick="return confirm('Deseja Excluir?')"  class="bg-red-500 hover:bg-red-600 text-white
+                            font-semibold py-2 px-4 rounded focus:outline
+                            focus:ring focus:border-red-300"><i
+                                                class="fa-solid fa-pen-to-square" style="color: white;"></i>  Deletar</a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
+
+        </div>
+
+        <a class="bg-blue-500 hover:bg-blue-600 text-white
+                                font-semibold py-2 px-4 rounded focus:outline
+                                focus:ring focus:border-blue-300"
+                        href="{{ route('reserva.cadastrar', $cliente->id) }}">
+                        <i class="fa-solid fa-plus"></i>
+                        Criar Reserva</a>
     </div>
  
 @endsection

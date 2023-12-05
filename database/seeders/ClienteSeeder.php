@@ -14,23 +14,23 @@ class ClienteSeeder extends Seeder
     {
         $clientes = [
             [
-                'nome' => "Hiury Gabriel Tressoldi",
-                'email' => "hyu@gmail.com",
+                'nome' => "Cristiano Ronaldo",
+                'email' => "cr7@gmail.com",
                 'telefone' => "(49) 98883-0613",
             ],
             [
-                'nome' => "Gabriel Augusto Weber",
-                'email' => "weber@gmail.com",
+                'nome' => "Lionel Messi",
+                'email' => "messi@gmail.com",
                 'telefone' => "(49) 96846-6848",
             ],
             [
-                'nome' => "Gabriel Riboli",
-                'email' => "neureoribolinho@gmail.com",
+                'nome' => "Neymar Jr.",
+                'email' => "neymarjr@gmail.com",
                 'telefone' => "(49) 98465-8974",
             ],
             [
-                'nome' => "Murilo Vizzotto",
-                'email' => "muriloviz@gmail.com",
+                'nome' => "Paolo Maldini",
+                'email' => "maldini@gmail.com",
                 'telefone' => "(49) 96485-3215",
             ],
         ];

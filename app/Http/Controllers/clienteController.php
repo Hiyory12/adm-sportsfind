@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Documentos;
+use App\Models\Espaco;
 use App\Http\Requests\clienteStoreRequest;
 use App\Http\Requests\clienteUpdateRequest;
 use App\Models\Documento;
@@ -111,6 +112,8 @@ class clienteController extends Controller
 
     public function detalhes($id) {
         $cliente = Cliente::findOrFail($id);
+        $reservas = $cliente->reservas();
+        $espacos = Espaco::all();
 
         if($cliente->documento) {
             $documentoId = $cliente->documento->id;
@@ -124,6 +127,6 @@ class clienteController extends Controller
             $documento = "";
         }
 
-        return view('cliente.detalhes')->with(['cliente'=> $cliente, 'documento' => $documento]);
+        return view('cliente.detalhes')->with(['cliente'=> $cliente, 'documento' => $documento, 'reservas' => $reservas, 'espacos' => $espacos]);
     }
 }

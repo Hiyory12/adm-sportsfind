@@ -22,11 +22,21 @@ class reservaController extends Controller
     public function create(Request $request): View
     {
         $espacos = Espaco::orderBy('nome')->get();
-        $clientes = Cliente::orderBy('nome')->get();
         return view('reserva.form')->with('clientes', $clientes)->with('espacos', $espacos);
     }
 
-    public function store(reservaStoreRequest $request): RedirectResponse
+    public function cadastrar(Request $request, $id)
+    {
+        $cliente = Cliente::find($id);
+        $espacos = Espaco::all();
+
+        return view('reserva.form')->with([
+            "cliente" => $cliente,
+            "espacos" => $espacos,
+        ]);
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'inicio'=>'required',
@@ -42,11 +52,18 @@ class reservaController extends Controller
             'cliente_id.required'=>'O :attribute é obrigatório!',
             'espaco_id.required'=>'O :attribute é obrigatório!',
         ]);
-        $reserva = Reserva::create($request->validated());
-
-        $request->session()->flash('reserva.id', $reserva->id);
-
-        return redirect()->route('reserva.index');
+        $dados = [
+            'cliente_id'=>$request->cliente_id,
+            'espaco_id'=> $request->espaco_id,
+            'valor'=> $request->valor,
+            'inicio'=> $request->inicio,
+            'fim'=>$request->fim,
+        ];  
+    
+        Reserva::create($dados);
+    
+    
+        return redirect()->route('cliente.detalhes', $request->cliente_id)->with('success', "Cadastrado  com sucesso!");
     }
 
     public function show(Request $request, reserva $reserva): View
@@ -59,11 +76,15 @@ class reservaController extends Controller
     {
         $espacos = Espaco::orderBy('nome')->get();
         $clientes = Cliente::orderBy('nome')->get();
-        return view('reserva.form')->with('clientes', $clientes)->with('espacos',$espacos)->with('reserva', $reserva);
+
+        $cliente = Cliente::find($reserva->cliente_id);
+        return view('reserva.form')->with('clientes', $clientes)->with('espacos',$espacos)->with('reserva', $reserva)->with('cliente', $cliente);
     }
 
-    public function update(reservaUpdateRequest $request, reserva $reserva): RedirectResponse
-    {$request->validate([
+    public function update(Request $request, reserva $reserva)
+    {
+        
+    $request->validate([
         'inicio'=>'required',
         'fim'=>'required',
         'valor'=>'required|numeric',
@@ -73,22 +94,35 @@ class reservaController extends Controller
         'inicio.required'=>'O :attribute é obrigatório!',
         'fim.required'=>'O :attribute é obrigatório!',
         'valor.required'=>'O :attribute é obrigatório!',
-        'valor.numeric'=>'O :attribute deve ser numérico!',
+        'valor.numeric'=>'O :attribute deve ser um número!',
         'cliente_id.required'=>'O :attribute é obrigatório!',
         'espaco_id.required'=>'O :attribute é obrigatório!',
     ]);
-        $reserva->update($request->validated());
+        
+    $dados = [
+        'cliente_id'=>$request->cliente_id,
+        'espaco_id'=> $request->espaco_id,
+        'valor'=> $request->valor,
+        'inicio'=> $request->inicio,
+        'fim'=>$request->fim,
+    ];  
 
-        $request->session()->flash('reserva.id', $reserva->id);
+    Reserva::updateOrCreate(
+        ['id' => $request->id],
+        $dados
+    );
 
-        return redirect()->route('reserva.index');
+
+    return redirect()->route('cliente.detalhes', $request->cliente_id)->with('success', "Atualizado com sucesso!");
     }
 
-    public function destroy(Request $request, reserva $reserva): RedirectResponse
+    public function destroy($id)
     {
+        $reserva = Reserva::findOrFail($id);
+        $clienteId = $reserva->cliente_id;
         $reserva->delete();
 
-        return redirect()->route('reserva.index');
+        return redirect()->route('cliente.detalhes', $clienteId)->with('success', "Removido com sucesso!");
     }
 
     public function search(Request $request): RedirectResponse

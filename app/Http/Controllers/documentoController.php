@@ -19,18 +19,62 @@ class documentoController extends Controller
         return view('documento.list', compact('documentos'));
     }
 
-    public function create()
+    public function cadastrar(Request $request, $id)
     {
-        return view('documento.form');
+        $cliente = Cliente::find($id);
+
+        return view('documento.form')->with([
+            "cliente" => $cliente
+        ]);
     }
 
-    public function store(documentoStoreRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        $documento = Documento::create($request->validated());
+        $foto = $request->file('foto');
+        $nome_arquivo = "";
+        //verifica se existe foto no formulário
+        if($foto){
+            $nome_arquivo =
+            date('YmdHis').'.'.$foto->getClientOriginalExtension();
 
-        $request->session()->flash('documento.id', $documento->id);
+            $diretorio = "images/documento/";
+            //salva foto em uma pasta do sistema
 
-        return redirect()->route('documento.index');
+
+            $foto->storeAs($diretorio,$nome_arquivo,'public');
+
+        }
+
+        $request->validate([
+            'cliente_id'=>'required',
+            'titular'=>'required',
+            'numero'=>'required',
+            'plano'=>'required',
+            'foto'=>'required',
+        ],[
+            'cliente_id.required'=>"O :attribute é obrigatorio!",
+            'titular.required'=>"O :attribute é obrigatorio!",
+            'numero.required'=>"O :attribute é obrigatorio!",
+            'plano.required'=>"O :attribute é obrigatorio!",
+            'foto.required'=>"O :attribute é obrigatorio!",
+        ]);
+
+
+        $dados = [
+            'cliente_id'=>$request->cliente_id,
+            'titular'=> $request->titular,
+            'numero'=> $request->numero,
+            'foto'=>$nome_arquivo,
+            'plano'=>$request->plano,
+        ];
+
+        Documento::updateOrCreate(
+            ['id' => $request->id],
+            $dados
+        );
+
+
+        return redirect()->route('cliente.detalhes', $request->cliente_id)->with('success', "Criado com sucesso!");
     }
 
     public function show(Request $request, documento $documento): View
@@ -47,16 +91,46 @@ class documentoController extends Controller
         ]);
     }
 
-    public function update(documentoUpdateRequest $request, documento $documento): RedirectResponse
+    public function update(Request $request, documento $documento)
     {
-        $documento->update($request->validated());
+
+        $foto = $request->file('foto');
+        $nome_arquivo = "";
+        //verifica se existe foto no formulário
+        if($foto){
+            $nome_arquivo =
+            date('YmdHis').'.'.$foto->getClientOriginalExtension();
+
+            $diretorio = "images/documento/";
+            //salva foto em uma pasta do sistema
+
+
+            $foto->storeAs($diretorio,$nome_arquivo,'public');
+
+        }
+        else {
+            $nome_arquivo = $documento->foto;
+        }
+
+        $request->validate([
+            'cliente_id'=>'required',
+            'titular'=>'required',
+            'numero'=>'required',
+            'plano'=>'required',
+        ],[
+            'cliente_id.required'=>"O :attribute é obrigatorio!",
+            'titular.required'=>"O :attribute é obrigatorio!",
+            'numero.required'=>"O :attribute é obrigatorio!",
+            'plano.required'=>"O :attribute é obrigatorio!",
+        ]);
+
 
         $dados = [
             'cliente_id'=>$request->cliente_id,
-        'titular'=> $request->titular,
-        'numero'=> $request->numero,
-        'foto'=>$nome_arquivo,
-        'plano'=>$request->plano,
+            'titular'=> $request->titular,
+            'numero'=> $request->numero,
+            'foto'=>$nome_arquivo,
+            'plano'=>$request->plano,
         ];  
 
         Documento::updateOrCreate(

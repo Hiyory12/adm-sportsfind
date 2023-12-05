@@ -22,6 +22,7 @@
             <a href="{{ route('documento.list') }}" class="text-xl font-semibold leading-6 text-gray-200">Documentos</a>
             <a href="{{ route('cliente.list') }}" class="text-xl font-semibold leading-6 text-gray-200">Clientes</a>
             <a href="{{ route('espaco.list') }}" class="text-xl font-semibold leading-6 text-gray-200">Espaços</a>
+            <a href="{{ route('reserva.list') }}" class="text-xl font-semibold leading-6 text-gray-200">Reservas</a>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         </div>
