@@ -148,6 +148,13 @@ class documentoController extends Controller
         $clienteId = $documento->cliente_id;
         $documento->delete();
 
+        $caminhoFoto = public_path().'/storage/images/documento/'.$documento->foto;
+
+
+        if($documento->foto != 'sem_foto.jpg' && $documento->foto != '') {
+            unlink($caminhoFoto);   //DELETA O ARQUIVO DE FOTO DA PASTA STORAGE
+        }
+
         return redirect()->route('cliente.detalhes', $clienteId)->with('success', "Removido com sucesso!");
     }
 

@@ -141,6 +141,13 @@ class espacoController extends Controller
 
         $espaco->delete();
 
+        $caminhoFoto = public_path().'/storage/images/espaco/'.$espaco->foto;
+
+
+        if($espaco->foto != 'sem_foto.jpg' && $espaco->foto != '') {
+            unlink($caminhoFoto);   //DELETA O ARQUIVO DE FOTO DA PASTA STORAGE
+        }
+
         return redirect()->route('espaco.list')->with('success', "Removido com sucesso!");
     }
 
